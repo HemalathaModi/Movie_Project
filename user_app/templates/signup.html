@@ -1,0 +1,164 @@
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    a {
+        text-decoration: none;
+        color: #1a53bc;
+    }
+
+    .signup-link {
+        /* border: 2px solid; */
+        display: flex;
+        justify-content: center;
+        font-size: 1.1rem;
+        padding: 5px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .button {
+        display: flex;
+        justify-content: center;
+    }
+
+    .title {
+        width: 100%;
+        /* border: 2px solid; */
+        display: flex;
+        font-size: 2rem;
+        margin-top: 20px;
+        font-weight: bold;
+        justify-content: center;
+        color: #1a53bc;
+
+    }
+
+
+    .button>input {
+        /* border: 2px solid; */
+        border: 1px solid rgb(167, 230, 209);
+        border-radius: 10px;
+        width: 50%;
+        font-weight: bold;
+        padding: 10px;
+        cursor: pointer;
+        background-color: #1a53bc;
+        color: white;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .button>input:hover {
+        transform: scale(1.2);
+
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* padding: 10px; */
+        border-radius: 15px;
+        /* border: 2px solid; */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .row {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        /* border: 2px solid; */
+        /* padding: 15px; */
+    }
+
+    .row>.fas {
+        /* border: 2px solid; */
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .row>input {
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+    }
+
+    /* .row {
+        margin: 50px;
+    } */
+
+    .wrapper>form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        /* border: 2px solid; */
+        padding: 30px;
+    }
+
+    /* input {
+        padding: 10px;
+        border: 2px solid;
+        border-radius: 10px;
+    } */
+</style>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <div class="title">
+                <span>Signup Form</span>
+            </div>
+            <form method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                {% if error_message %}
+                <p style="color: red;">{{error_message}}</p>
+                {% endif %}
+                <div class="row">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="row">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password1" placeholder="Password" required>
+                </div>
+                <div class="row">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password2" placeholder="confirm Password" required>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Signup">
+                </div>
+                <div class="signup-link">Already a member? <a href="{% url 'login' %}">Login now</a></div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

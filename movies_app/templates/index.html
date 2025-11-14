@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Page</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 10px;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main-container {
+        height: 60%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+        /* background-color: rgb(217, 228, 228); */
+        border-radius: 20px;
+        font-size: 2rem;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    }
+
+    .btn {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border: none;
+        background-color: rgb(169, 178, 197);
+        font-size: 1.2rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        background-color: #1a53bc;
+        color: white;
+    }
+
+    .btn:hover {
+        transform: scale(1.2);
+    }
+
+    .main-container>.title {
+        color: #1a53bc;
+    }
+</style>
+
+<body>
+    {% block content %}
+    <div class="main-container">
+        <h3 class="title">Welcome to Movies Page!!</h3>
+        <p class="para">Explore a vast collection of movies from various genres and eras. Whether you're in the
+            mood for a classic film or the latest blockbuster, we have something for everyone.</p>
+        {% if user.is_authenticated %}
+        {% if not movies %}
+        <button class="btn" onclick="window.location.href='{% url 'list' %}'">Create Movie Details</button>
+        {% endif %}
+        {% else %}
+        <button class="btn" onclick="window.location.href='{% url 'login' %}'">Click here to Explore Movies</button>
+        {% endif %}
+    </div>
+    {% endblock %}
+</body>
+
+</html>

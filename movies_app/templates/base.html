@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Listing Web</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            padding: 10px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            position: fixed;
+            top: 0;
+            z-index: 9999;
+            width: 100%;
+        }
+
+        .navbar-nav {
+            /* border: 2px solid; */
+            display: flex;
+            /* width: 100vw; */
+            justify-content: right;
+            gap: 20px;
+            width: 50%;
+            padding: 10px;
+            /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+            border-radius: 15px;
+        }
+
+        .navbar-brand {
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+            border-radius: 15px;
+            transition: 0.5s ease;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .nav-item {
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 8px;
+            font-weight: bolder;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: 0.5s ease;
+            /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+        }
+
+        .nav-item:hover,
+        .navbar-brand:hover,
+        .nav-item1:hover {
+
+            transform: scale(1.2);
+        }
+
+        .nav-item1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            transition: 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h2><a class="nav-link" href="{% url 'list' %}">Movies Page</a></h2>
+            </div>
+            <div class="navbar-nav" id="navbarNav">
+                {% if user.is_authenticated %}
+                {% if requesr.resolver_match.url_name != 'list' %}
+                <div class="nav-item"><a class="nav-link" href="{% url 'list' %}">Movies List</a></div>
+                {% endif %}
+
+            </div>
+            <div class="nav-item" id="create-btn"><a href="{% url 'create' %}" class="btn-primary">Create Movie</a>
+            </div>
+            <div class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></div>
+            <div class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></div>
+            <div class="nav-item1"><a class="nav-link" href="{% url 'favorites' %}"><i class="fa fa-heart"></i></a>
+                {% else %}
+                <div class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></div>
+                <div class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>

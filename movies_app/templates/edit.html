@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Movie{% endblock %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* .form-container {
+            border: 2px solid;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+        } */
+        .form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            top: 100px;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #1a53bc;
+        }
+
+        .form-field {
+            margin-bottom: 1rem;
+        }
+
+        .form-field label {
+            /* display: block; */
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-field input[type="text"],
+        .form-field input[type="password"],
+        .form-field input[type="number"],
+        .form-field textarea {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-field input[type="file"] {
+            margin-top: 0.5rem;
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+        .form-actions button {
+            background-color: #1a53bc;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .form-actions button:hover {
+            background-color: #16a085;
+        }
+    </style>
+
+
+</head>
+
+
+<!-- <center> -->
+<div class="form-container">
+    <h2 class="form-title">Edit Movie</h2>
+    <form method="POST" action="{% url 'edit' movie.pk %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-field">
+            <label for="id_title">Title:</label>
+            {{ form.title }}
+        </div>
+
+        <div class="form-field">
+            <label for="id_description">Description:</label>
+            {{ form.description }}
+        </div>
+
+        <div class="form-field">
+            <label for="id_year">Year:</label>
+            {{ form.year }}
+        </div>
+
+        <div class="form-field">
+            <label for="id_image">Image:</label>
+            {{ form.image}}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">Save Changes</button>
+        </div>
+    </form>
+</div>
+<!-- </center> -->
+
+{% endblock %}
