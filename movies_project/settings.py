@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 SECRET_KEY = config('SECRET_KEY', default='unsafe-secret-key-for-dev')
 DEBUG = config('DEBUG', 'False').lower() == 'true'
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS').split(' ')]
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
 # Application definition
 INSTALLED_APPS = [
