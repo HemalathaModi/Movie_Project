@@ -18,6 +18,7 @@
 
         body {
             height: 100vh;
+            overflow: hidden;
         }
 
         .navbar {
@@ -27,11 +28,13 @@
             align-items: center;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             border-radius: 15px;
-            margin-bottom: 20px;
+            /* margin-bottom: 20px; */
             position: fixed;
             top: 0;
-            z-index: 9999;
             width: 100%;
+            z-index: 1;
+            background-color: rgb(215, 250, 249);
+
         }
 
         .navbar-nav {
@@ -56,6 +59,7 @@
 
         a {
             text-decoration: none;
+            color: rgb(3, 59, 102);
         }
 
         .nav-item {
@@ -94,7 +98,7 @@
             </div>
             <div class="navbar-nav" id="navbarNav">
                 {% if user.is_authenticated %}
-                {% if requesr.resolver_match.url_name != 'list' %}
+                {% if request.resolver_match.url_name != 'list' %}
                 <div class="nav-item"><a class="nav-link" href="{% url 'list' %}">Movies List</a></div>
                 {% endif %}
 
@@ -103,7 +107,9 @@
             </div>
             <div class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></div>
             <div class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></div>
+            {% if request.resolver_match.url_name != 'favorites' %}
             <div class="nav-item1"><a class="nav-link" href="{% url 'favorites' %}"><i class="fa fa-heart"></i></a>
+                {% endif %}
                 {% else %}
                 <div class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></div>
                 <div class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></div>

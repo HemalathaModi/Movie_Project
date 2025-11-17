@@ -8,6 +8,9 @@ class Movieinfo(models.Model):
     year = models.IntegerField()
     image = models.ImageField(upload_to='movies/', blank = True, null = True)
 
+    class Meta:
+        db_table = 'movie_info'
+
     def __str__(self):
         return self.title
 

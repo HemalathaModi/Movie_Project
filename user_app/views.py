@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as authlogin, logout as authlogout
 from django.contrib.auth.models import User
+from .models import UserDetails
 
 
 def logout(request):
@@ -20,6 +21,11 @@ def signup(request):
             return render(request, 'signup.html', {'error_message' : error_message})
         else:
             user = User.objects.create_user(username = username, password = password1)
+            user.save()
+
+            UserDetails.objects.create(
+                user = user
+            )
             return redirect('login')
     return render(request, 'signup.html')
 

@@ -1,14 +1,14 @@
 from pathlib import Path
 import os
 from decouple import config
-
+import dj_database_url
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 SECRET_KEY = config('SECRET_KEY', default='unsafe-secret-key-for-dev')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = [config('RENDER_EXTERNAL_HOSTNAME', default='localhost'), '127.0.0.1']
+DEBUG = config('DEBUG', 'False').lower() == 'true'
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS').split(' ')]
 
 # Application definition
 INSTALLED_APPS = [
@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,28 +54,31 @@ TEMPLATES = [
 WSGI_APPLICATION = 'movies_project.wsgi.application'
 
 # Database (SQLite)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',  # include this in GitHub for initial data
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # include this in GitHub for initial data
+    }
+}
+
+DATABASES['default'] = dj_database_url.parse(config('DB_URL'))
+
+
+# if os.environ.get('RENDER'):
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': '/tmp/db.sqlite3',
+#         }
 #     }
-# }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
 
-
-if os.environ.get('RENDER'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': '/tmp/db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
 
 
 # Password validation
@@ -93,12 +97,18 @@ USE_TZ = True
 
 # Static files (CSS, JS)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']    # your local static folder
-STATIC_ROOT = BASE_DIR / 'staticfiles'      # for collectstatic on Render
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # collectstatic output
+
+# Only include if you have a global static folder, otherwise leave empty
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
